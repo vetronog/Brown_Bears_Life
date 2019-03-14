@@ -24,4 +24,19 @@ public class PathHandler : MonoBehaviour
 
         return r;
     }
+
+    public Queue<Transform> GetPathReverse(int currentPosition, int length)
+    {
+        Queue<Transform> r = new Queue<Transform>();
+        int x = currentPosition - 1;
+        for (int i = 0; i < length; ++i)
+        {
+            x = x - i;
+            if (x == -1)
+                x = path.Count - 1;
+            r.Enqueue(path[x]);
+        }
+
+        return r;
+    }
 }

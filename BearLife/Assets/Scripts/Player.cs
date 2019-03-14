@@ -23,6 +23,9 @@ public class Player : MonoBehaviour
     private Queue<Transform> _path;
     private bool _isMoving;
     private Vector3 _startPos, _endPos;
+    private Cell _pathEnd;
+    private bool endedTurn;
+    private bool _skipsTurn = false;
     // Start is called before the first frame update
     void Start()
     {
@@ -50,13 +53,31 @@ public class Player : MonoBehaviour
                 if(_path.Count>0)
                 {
                     _startPos = transform.position;
-                    _endPos = _path.Dequeue().position;
+                    if (_path.Count == 1)
+                    {
+                        _pathEnd = _path.Dequeue().gameObject.GetComponent<Cell>();
+                        _endPos = _pathEnd.transform.position;
+                    }
+                    else
+                    {
+                        _endPos = _path.Dequeue().position;
+                    }
                     _timer = 0;
+
                 }
                 else
                 {
                     _isMoving = false;
-                    GameController.instance.ChangeActivePlayer();
+                    if (!endedTurn)
+                    {
+                        _pathEnd.ActivateCell();
+                        endedTurn = true;                        
+                    }
+                    else
+                    {
+                        GameController.instance.ChangeActivePlayer();
+                    }
+                    
                 }
             }
         }
@@ -74,6 +95,7 @@ public class Player : MonoBehaviour
 
     public int Roll()
     {
+        endedTurn = false;
         if (!_isMoving)
         {
             _wayLength = Random.Range(2, 12);
@@ -82,10 +104,51 @@ public class Player : MonoBehaviour
         return _wayLength;        
     }
 
+    public void WalkForward(int n)
+    {
+        if (!_isMoving)
+        {
+            _wayLength = n;
+            GetPath();
+        }
+    }
+
+    public void WalkBack(int n)
+    {
+        if (!_isMoving)
+        {
+            _wayLength = n;
+            GetPathReverse();
+        }
+    }
+
+    private void GetPathReverse()
+    {
+        _path = _pathHandler.GetPathReverse(_currentPos, _wayLength);
+        _currentPos = _currentPos - _wayLength;
+        _startPos = transform.position;
+        _pathEnd = _path.Dequeue().gameObject.GetComponent<Cell>();
+        _endPos = _pathEnd.transform.position;
+        _isMoving = true;
+        _timer = 0;
+    }
+
     public PlayerType Type
     {
         get {
             return type;
+        }
+    }
+
+    public void SkipTurn(bool t)
+    {
+        _skipsTurn = t;
+    }
+
+    public bool IsSkipping
+    {
+        get {
+            return _skipsTurn;
         }
     }
 
