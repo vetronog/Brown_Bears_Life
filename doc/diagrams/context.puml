@@ -1,0 +1,14 @@
+@startuml
+!includeurl https://raw.githubusercontent.com/RicardoNiepel/C4-PlantUML/release/1-0/C4_Container.puml
+
+title Диаграмма контекста
+
+Person(Admin, "Администратор", "Заполняет и редактирует базу данных")
+Person(Player, "Игрок", "Использует приложение для получения удовольствия и новых знаний")
+System(SystemFrontAlias, "Игра", "Обработка данных")
+ContainerDb(BD, "База данных", "DB", "Хранилище игроков и вопросов игры")
+
+Rel(Admin, SystemFrontAlias, "Заполнение и редактирование базы данных")
+Rel(Player, SystemFrontAlias, "Вход в систему", "Играет")
+Rel(SystemFrontAlias, BD, "Отправка запроса", "Обработка и вывод данных из БД")
+@enduml

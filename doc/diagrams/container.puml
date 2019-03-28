@@ -1,0 +1,37 @@
+@startuml
+!includeurl https://raw.githubusercontent.com/RicardoNiepel/C4-PlantUML/master/C4_Container.puml
+
+LAYOUT_TOP_DOWN
+
+title Диаграмма контейнеров
+
+Person(Admin, "Администратор", "Заполняет и редактирует базу данных")
+Person(Player, "Игрок", "Использует приложение для получения удовольствия и новых знаний")
+
+System_Boundary(c1, "Жизнь бурого мишки") {
+    Container(PCGame, "Игра для ПК", "Unity Engine, C#", "Пользовательский функционал для ПК")
+    Container(AndroidGame, "Игра для Android", "Unity Engine, C#", "Пользовательский функционал для Android")
+    Container(iOSGame, "Игра для iOS", "Unity Engine, C#", "Пользовательский функционал для iOS")
+    Container(BackendApi, "Backend API", "ASP .NET", "Бизнес логика приложения в виде API")
+    Container(Redactor, "Редактор вопросов", "ASP .NET", "")
+    ContainerDb(Database, "База данных", "FireBase", "Хранилище игроков и вопросов игры")
+}
+Container(VK, "Вконтакте", "Open API", "Публикация сертификата игрока на стене")
+
+
+Rel(Admin, Redactor, "Uses", "HTTPS")
+Rel(Player, PCGame, "Uses", "HTTPS")
+Rel(Player, AndroidGame, "Uses", "HTTPS")
+Rel(Player, iOSGame, "Uses", "HTTPS")
+
+Rel(PCGame, BackendApi, "Отправка и получение данных от сервера")
+Rel(AndroidGame, BackendApi, "Отправка и получение данных от сервера")
+Rel(iOSGame, BackendApi, "Отправка и получение данных от сервера")
+Rel(Redactor, BackendApi, "Отправка и получение данных от сервера")
+Rel(BackendApi, Database, "Чтение и запись в БД")
+
+Rel(PCGame, VK, "Публикация сертификата")
+Rel(AndroidGame, VK, "Публикация сертификата")
+Rel(iOSGame, VK, "Публикация сертификата")
+
+@enduml
