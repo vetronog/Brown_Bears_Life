@@ -7,6 +7,7 @@ title Диаграмма контейнеров
 
 Person(Admin, "Администратор", "Заполняет и редактирует базу данных")
 Person(Player, "Игрок", "Использует приложение для получения удовольствия и новых знаний")
+Person(Visiter, "Визитер", "Регистрируется в игре")
 
 System_Boundary(c1, "Жизнь бурого мишки") {
     Container(PCGame, "Игра для ПК", "Unity Engine, C#", "Пользовательский функционал для ПК")
@@ -19,10 +20,13 @@ System_Boundary(c1, "Жизнь бурого мишки") {
 Container(VK, "Вконтакте", "Open API", "Публикация сертификата игрока на стене")
 
 
-Rel(Admin, Redactor, "Uses", "HTTPS")
-Rel(Player, PCGame, "Uses", "HTTPS")
-Rel(Player, AndroidGame, "Uses", "HTTPS")
-Rel(Player, iOSGame, "Uses", "HTTPS")
+Rel(Admin, Redactor, "Редактирует", "HTTPS")
+Rel(Player, PCGame, "Играет", "HTTPS")
+Rel(Player, AndroidGame, "Играет", "HTTPS")
+Rel(Player, iOSGame, "Играет", "HTTPS")
+Rel(Visiter, PCGame, "Регистрируется", "HTTPS")
+Rel(Visiter, AndroidGame, "Регистрируется", "HTTPS")
+Rel(Visiter, iOSGame, "Регистрируется", "HTTPS")
 
 Rel(PCGame, BackendApi, "Отправка и получение данных от сервера")
 Rel(AndroidGame, BackendApi, "Отправка и получение данных от сервера")
