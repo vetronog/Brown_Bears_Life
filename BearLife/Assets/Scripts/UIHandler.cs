@@ -11,6 +11,7 @@ public class UIHandler : MonoBehaviour
     private Text _rollText;
     [SerializeField]
     private Text _playerText;
+
     private void Start()
     {
         _gc.changedPlayerType += ChangePlayerText;

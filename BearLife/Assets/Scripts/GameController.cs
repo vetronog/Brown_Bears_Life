@@ -5,9 +5,9 @@ using UnityEngine;
 
 public class GameController : MonoBehaviour
 {
-    [SerializeField] private Player playerBear;
-    [SerializeField] private Player playerMoose;
-    private Player currentPlayer;
+    [SerializeField] protected PlayerPresenter playerBear;
+    [SerializeField] protected PlayerPresenter playerMoose;
+    protected PlayerPresenter currentPlayer;
     public static GameController instance;
     private void Start()
     {
@@ -15,7 +15,7 @@ public class GameController : MonoBehaviour
         instance = this;
     }
     // Start is called before the first frame update
-    public void ChangeActivePlayer()
+    public virtual void ChangeActivePlayer()
     {
         if(currentPlayer.Type == PlayerType.bear)
         {
@@ -25,12 +25,12 @@ public class GameController : MonoBehaviour
         {
             currentPlayer = playerBear;
         }
-        changedPlayer(currentPlayer.transform);
-        changedPlayerType(currentPlayer.Type);
+        ChangedPlayer();
+        ChangedPlayerType();        
         if(currentPlayer.IsSkipping)
         {
             currentPlayer.SkipTurn(false);
-            ChangeActivePlayer();
+            ChangeActivePlayer();            
         }
     }
     public int RollActivePlayer()
@@ -38,7 +38,19 @@ public class GameController : MonoBehaviour
         return currentPlayer.Roll();
     }
 
-    public Player GetCurrentPlayer
+    protected void ChangedPlayerType()
+    {
+        if(changedPlayerType!= null)
+            changedPlayerType(currentPlayer.Type);
+    }
+
+    protected void ChangedPlayer()
+    {
+        if(currentPlayer!= null)
+            changedPlayer(currentPlayer.transform);
+    }
+
+    public PlayerPresenter GetCurrentPlayer
     {
         get { return currentPlayer; }
     }
