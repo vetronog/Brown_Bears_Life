@@ -62,6 +62,7 @@ PVS-Studio_Cmd.exe --target "solution_name.sln" --platform "Any CPU" --configura
 * param - описание параметра, принимаемого методом
 * returns/value - описание возвращаемого значения метода
 * remarks - примечание к описываемому методу
+
 Инструменты:
 * [Sandcastle](https://archive.codeplex.com/?p=sandcastle)
 * [Sandcastle Help File Builder](https://archive.codeplex.com/?p=shfb)
