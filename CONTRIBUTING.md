@@ -70,6 +70,7 @@ PVS-Studio_Cmd.exe --target "solution_name.sln" --platform "Any CPU" --configura
 ## Правила контроля качества и инструменты
 ### Unit-тестирование
 Покрытие кода тестами должно быть не менее 90%
+
 Инструмент: [NUnit](https://github.com/nunit/docs/wiki/NUnit-Documentation)
 
 ### Usability-тестирование
