@@ -15,12 +15,15 @@ public class MultiplayerUIHandler : MonoBehaviour, IPunObservable
     [SerializeField]
     private Button _rollButton;
     [SerializeField]
+    private GameObject _endPanel;
+    [SerializeField]
     private Photon.Realtime.Player _player;
     private PhotonView _photonView;
 
     private void Start()
     {
         _gc.changedPlayerType += ChangePlayerText;
+        _gc.endGame += EndGame;
         _photonView = GetComponent<PhotonView>();
     }
     public void RollButton()
@@ -58,5 +61,15 @@ public class MultiplayerUIHandler : MonoBehaviour, IPunObservable
         {
             _player = stream.ReceiveNext() as Photon.Realtime.Player;
         }
+    }
+
+    private void EndGame(PlayerType type)
+    {
+        _endPanel.SetActive(true);
+    }
+
+    public void Exit()
+    {
+        _gc.Exit();
     }
 }

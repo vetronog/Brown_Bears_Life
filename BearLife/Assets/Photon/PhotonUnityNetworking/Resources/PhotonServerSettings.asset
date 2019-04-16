@@ -34,5 +34,6 @@ MonoBehaviour:
   - RespawnSpaceship
   - UpdateState
   - TransferOwnership
+  - SetEnd
   DisableAutoOpenWizard: 1
   ShowSettings: 0

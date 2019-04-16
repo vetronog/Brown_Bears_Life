@@ -21,7 +21,7 @@ public class PlayerPresenter : MonoBehaviour
     private PlayerModel _model;
     [SerializeField]private PlayerView _view;
     // Start is called before the first frame update
-    void Awake()
+    protected virtual void Awake()
     {
         _model = new PlayerModel();
         _model.SetType(type);

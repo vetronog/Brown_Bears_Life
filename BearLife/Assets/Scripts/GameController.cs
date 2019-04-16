@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameController : MonoBehaviour
 {
@@ -60,8 +61,26 @@ public class GameController : MonoBehaviour
         currentPlayer.SkipTurn(true);
     }
 
+    public virtual void EndGame(PlayerType type)
+    {
+        SetEndGame(type);
+    }
+
+    protected void SetEndGame(PlayerType type)
+    {
+        if (endGame != null)
+        {
+            endGame(type);
+        }
+    }
+
+    public virtual void Exit()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    }
+
     public event Action<Transform> changedPlayer;
     public event Action<PlayerType> changedPlayerType;
-
+    public event Action<PlayerType> endGame;
 
 }

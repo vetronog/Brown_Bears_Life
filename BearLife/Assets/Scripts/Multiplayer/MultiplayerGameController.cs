@@ -10,8 +10,13 @@ public class MultiplayerGameController : GameController,IPunObservable
     // Start is called before the first frame update
     void Awake()
     {
-        _activePlayer = PhotonNetwork.PlayerList[1];
+        _activePlayer = PhotonNetwork.PlayerList[0];
+        currentPlayer = playerBear;
         _photonView = GetComponent<PhotonView>();
+        if (PhotonNetwork.MasterClient == PhotonNetwork.LocalPlayer)
+        {
+            Invoke("ChangeActivePlayer", 0.1f);
+        }
     }
 
     public override void ChangeActivePlayer()
@@ -65,5 +70,21 @@ public class MultiplayerGameController : GameController,IPunObservable
     {
         return _activePlayer;
     }
-    
+
+    public override void EndGame(PlayerType type)
+    {
+        _photonView.RPC("SetEnd", RpcTarget.All);
+    }
+
+    public override void Exit()
+    {
+        PhotonNetwork.Disconnect();
+    }
+
+    [PunRPC]
+    private void SetEnd(PlayerType type)
+    {
+        SetEndGame(type);
+    }
+
 }
