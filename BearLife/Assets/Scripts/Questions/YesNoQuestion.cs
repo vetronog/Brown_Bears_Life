@@ -6,4 +6,12 @@ using UnityEngine;
 public class YesNoQuestion : QuestionData
 {
     [SerializeField] private bool _isTrue;
+    public bool IsTrue
+    {
+        get
+        {
+            return _isTrue;
+        }
+    }
+    
 }

@@ -5,5 +5,12 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "QuestionDB", menuName = "Scriptable object/QuestionDB")]
 public class QuestionDB : ScriptableObject
 {
-    [SerializeField] private List<QuestionData> _questions;
+    [SerializeField] private List<YesNoQuestion> _yesNoQuestions;
+    [SerializeField] private List<ChoiceQuestion> _choiceQuestions;
+
+    public List<QuestionData> GetQuestions()
+    {
+        List<QuestionData> newList = new List<QuestionData>(_yesNoQuestions);
+        return newList;
+    }
 }
