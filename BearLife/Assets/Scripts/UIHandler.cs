@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class UIHandler : MonoBehaviour
 {
@@ -10,10 +11,14 @@ public class UIHandler : MonoBehaviour
     [SerializeField]
     private Text _rollText;
     [SerializeField]
+    private GameObject _endPanel;
+    [SerializeField]
     private Text _playerText;
+
     private void Start()
     {
         _gc.changedPlayerType += ChangePlayerText;
+        _gc.endGame += EndGame;
     }
     public void RollButton()
     {
@@ -30,5 +35,15 @@ public class UIHandler : MonoBehaviour
         {
             _playerText.text = "Лось";
         }
+    }
+
+    private void EndGame(PlayerType type)
+    {
+        _endPanel.SetActive(true);
+    }
+
+    public void Exit()
+    {
+        _gc.Exit();
     }
 }

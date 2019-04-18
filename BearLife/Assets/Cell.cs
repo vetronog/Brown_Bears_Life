@@ -24,6 +24,36 @@ public class Cell : MonoBehaviour
     {
         
     }
+    public void ActivateCell(PlayerType type)
+    {
+        if (_type == CellType.finish)
+        {
+            if (type == PlayerType.bear)
+            {
+                Collider2D[] col = Physics2D.OverlapCircleAll(transform.position, 1);
+                foreach (Collider2D c in col)
+                {
+                    if (c.gameObject.tag == "Player")
+                    {
+                        if (c.gameObject.GetComponent<PlayerPresenter>().Type == PlayerType.moose)
+                        {
+                            GameController.instance.EndGame(type);
+                            break;
+                        }
+                    }
+                }
+                GameController.instance.ChangeActivePlayer();
+            }
+            else
+            {
+                GameController.instance.EndGame(type);
+            }
+        }
+        else
+        {
+            ActivateCell();
+        }
+    }
 
     public void ActivateCell()
     {
@@ -39,7 +69,7 @@ public class Cell : MonoBehaviour
                 GameController.instance.SkipTurn();
                 GameController.instance.ChangeActivePlayer();
                 break;
-            case CellType.finish:
+            default:
                 break;
         }
     }
