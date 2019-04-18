@@ -32,8 +32,8 @@ MonoBehaviour:
   - DestroySpaceship
   - Fire
   - RespawnSpaceship
-  - UpdateState
-  - TransferOwnership
   - SetEnd
+  - TransferOwnership
+  - UpdateState
   DisableAutoOpenWizard: 1
-  ShowSettings: 0
+  ShowSettings: 1
