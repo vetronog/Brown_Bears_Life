@@ -2073,6 +2073,18 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 1499168349}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &276728726 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5707539045926499182, guid: 5de3a0828365d9f49873eb0cea0e41a2,
+    type: 3}
+  m_PrefabInstance: {fileID: 5707539046996492080}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 708705254, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &278686371 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4747652530903305409, guid: fbe3a6212ad08be4a8201870ff52e83a,
@@ -14609,6 +14621,16 @@ PrefabInstance:
       propertyPath: m_Name
       value: Canvas
       objectReference: {fileID: 0}
+    - target: {fileID: 5707539045659968830, guid: 5de3a0828365d9f49873eb0cea0e41a2,
+        type: 3}
+      propertyPath: _gc
+      value: 
+      objectReference: {fileID: 99988656}
+    - target: {fileID: 5707539045659968830, guid: 5de3a0828365d9f49873eb0cea0e41a2,
+        type: 3}
+      propertyPath: _endPanel
+      value: 
+      objectReference: {fileID: 141437877}
     - target: {fileID: 5707539045659968802, guid: 5de3a0828365d9f49873eb0cea0e41a2,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -14714,21 +14736,22 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 5707539045659968830, guid: 5de3a0828365d9f49873eb0cea0e41a2,
-        type: 3}
-      propertyPath: _gc
-      value: 
-      objectReference: {fileID: 99988656}
-    - target: {fileID: 5707539045659968830, guid: 5de3a0828365d9f49873eb0cea0e41a2,
-        type: 3}
-      propertyPath: _endPanel
-      value: 
-      objectReference: {fileID: 141437877}
     - target: {fileID: 5707539045118671036, guid: 5de3a0828365d9f49873eb0cea0e41a2,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 519420030}
+    - target: {fileID: 5707539045659968803, guid: 5de3a0828365d9f49873eb0cea0e41a2,
+        type: 3}
+      propertyPath: _questionText
+      value: 
+      objectReference: {fileID: 276728726}
+    - target: {fileID: 5707539045659968803, guid: 5de3a0828365d9f49873eb0cea0e41a2,
+        type: 3}
+      propertyPath: _db
+      value: 
+      objectReference: {fileID: 11400000, guid: 7b63a3758c2250e498355e8ab11e3499,
+        type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5de3a0828365d9f49873eb0cea0e41a2, type: 3}
 --- !u!1001 &5864786857643679873

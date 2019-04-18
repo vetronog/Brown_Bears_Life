@@ -2494,7 +2494,9 @@ MonoBehaviour:
   - {fileID: 1034441537}
   - {fileID: 1199386403}
   - {fileID: 135450867}
+  _questionText: {fileID: 27268359}
   _panel: {fileID: 1737403233}
+  _db: {fileID: 11400000, guid: 7b63a3758c2250e498355e8ab11e3499, type: 2}
 --- !u!114 &479232551
 MonoBehaviour:
   m_ObjectHideFlags: 0
