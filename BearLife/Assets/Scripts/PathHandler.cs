@@ -32,8 +32,8 @@ public class PathHandler : MonoBehaviour
         for (int i = 0; i < length; ++i)
         {
             x = x - i;
-            if (x == -1)
-                x = path.Count - 1;
+            if (x <= -1)
+                x = path.Count - x;
             r.Enqueue(path[x]);
         }
 
