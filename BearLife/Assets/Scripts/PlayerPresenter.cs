@@ -32,6 +32,8 @@ public class PlayerPresenter : MonoBehaviour
 
     }
 
+
+
     // Update is called once per frame
     void Update()
     {
@@ -99,6 +101,16 @@ public class PlayerPresenter : MonoBehaviour
         return _wayLength;        
     }
 
+    public int Roll(int i)
+    {
+        endedTurn = false;
+        if (!_isMoving)
+        {
+            _wayLength = i;
+            GetPath();
+        }
+        return _wayLength;
+    }
     public void WalkForward(int n)
     {
         if (!_isMoving)

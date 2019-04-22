@@ -15,6 +15,19 @@ public class GameController : MonoBehaviour
         currentPlayer = playerBear;
         instance = this;
     }
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            currentPlayer.Roll(1);
+        }
+        if (Input.GetKeyDown(KeyCode.B))
+        {
+            currentPlayer.Roll(0);
+        }
+    }
+
     // Start is called before the first frame update
     public virtual void ChangeActivePlayer()
     {
@@ -64,6 +77,7 @@ public class GameController : MonoBehaviour
     public virtual void EndGame(PlayerType type)
     {
         SetEndGame(type);
+        Debug.Log(string.Format("Winner is {0}", type.ToString()));
     }
 
     protected void SetEndGame(PlayerType type)

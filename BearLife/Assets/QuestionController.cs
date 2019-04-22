@@ -72,18 +72,30 @@ public class QuestionController : MonoBehaviour
         int i =Random.Range(0, _questionsYN.Count);
         YesNoQuestion q= _questionsYN[i] as YesNoQuestion;
         _questionText.text = q.GetQuestionTitle;
+        _buttonText[0].text = "Да";
+        _buttonText[1].text = "Нет";
+        RemoveListeners();
         if (q.IsTrue)
         {
-            _buttonText[0].text = "Да";
-            _buttonText[1].text = "Нет";
+            _buttons[0].onClick.AddListener(RightAnswer);
+            _buttons[1].onClick.AddListener(WrongAnswer);
         }
         else
         {
-            _buttonText[0].text = "Нет";
-            _buttonText[1].text = "Да";
+            _buttons[1].onClick.AddListener(RightAnswer);
+            _buttons[0].onClick.AddListener(WrongAnswer);
         }
         _questionsYN.RemoveAt(i);
     }
+
+    private void RemoveListeners()
+    {
+        _buttons[0].onClick.RemoveAllListeners();
+        _buttons[1].onClick.RemoveAllListeners();
+        _buttons[2].onClick.RemoveAllListeners();
+    }
+
+
 
     private void SetChoiceQuestion()
     {
@@ -91,26 +103,20 @@ public class QuestionController : MonoBehaviour
         ChoiceQuestion q = _questionsChoice[i] as ChoiceQuestion;
         string[] answers = q.GetAnswers();
         _questionText.text = q.GetQuestionTitle;
-        switch (q.GetRightAnswer())
+        RemoveListeners();
+        for (int a = 0; a < 3; ++a)
         {
-            case 0:
-                _buttonText[0].text = answers[0];
-                _buttonText[1].text = answers[1];
-                _buttonText[2].text = answers[2];
-                break;
-            case 1:
-                _buttonText[0].text = answers[1];
-                _buttonText[1].text = answers[0];
-                _buttonText[2].text = answers[2];
-                break;
-            case 2:
-                _buttonText[0].text = answers[2];
-                _buttonText[1].text = answers[1];
-                _buttonText[2].text = answers[0];
-                break;
-            default:
-                break;
+            if(a == q.GetRightAnswer())
+                _buttons[a].onClick.AddListener(RightAnswer);
+            else
+                _buttons[a].onClick.AddListener(WrongAnswer);
         }
+        
+       
+        _buttonText[0].text = answers[0];
+        _buttonText[1].text = answers[1];
+        _buttonText[2].text = answers[2];
+      
         _questionsChoice.RemoveAt(i);
     }
 
