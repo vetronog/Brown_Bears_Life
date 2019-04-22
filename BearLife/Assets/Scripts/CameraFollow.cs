@@ -14,6 +14,7 @@ public class CameraFollow : MonoBehaviour
     [SerializeField] private float minSize;
     [SerializeField] private bool closeView;
     [SerializeField]private GameController controller;
+    [SerializeField] private CameraParamsDB paramDB;
     private Camera cam;
     [SerializeField] private Transform m_Player; // Reference to the player's transform.
 
@@ -34,7 +35,7 @@ public class CameraFollow : MonoBehaviour
         Camera camera = GetComponent<Camera>();
 
         // if scaled height is less than current height, add letterbox
-        if (scaleheight < 1.0f)
+        /*if (scaleheight < 1.0f)
         {
             Rect rect = camera.rect;
 
@@ -57,7 +58,13 @@ public class CameraFollow : MonoBehaviour
             rect.y = 0;
 
             camera.rect = rect;
-        }
+        }*/
+        CameraParams a = paramDB.GetParams();
+        maxXAndY = new Vector2(a.maxOffsetX, a.maxOffsetY);
+        minXAndY = new Vector2(-a.maxOffsetX, -a.maxOffsetY);
+        maxSize = a.maxSize;
+        maxSize = a.maxSize;
+
     }
 
     private void Awake()
@@ -79,6 +86,19 @@ public class CameraFollow : MonoBehaviour
     {
         // Returns true if the distance between the camera and the player in the y axis is greater than the y margin.
         return Mathf.Abs(transform.position.y - m_Player.position.y) > yMargin;
+    }
+
+    private bool CheckXMarginZero()
+    {
+        // Returns true if the distance between the camera and the player in the x axis is greater than the x margin.
+        return Mathf.Abs(transform.position.x) > xMargin;
+    }
+
+
+    private bool CheckYMarginZero()
+    {
+        // Returns true if the distance between the camera and the player in the y axis is greater than the y margin.
+        return Mathf.Abs(transform.position.y) > yMargin;
     }
 
 
@@ -149,14 +169,14 @@ public class CameraFollow : MonoBehaviour
         float currentSize = cam.orthographicSize;
 
         // If the player has moved beyond the x margin...
-        if (CheckXMargin())
+        if (CheckXMarginZero())
         {
             // ... the target x coordinate should be a Lerp between the camera's current x position and the player's current x position.
             targetX = Mathf.Lerp(transform.position.x, 0, xSmooth * Time.deltaTime);
         }
 
         // If the player has moved beyond the y margin...
-        if (CheckYMargin())
+        if (CheckYMarginZero())
         {
             // ... the target y coordinate should be a Lerp between the camera's current y position and the player's current y position.
             targetY = Mathf.Lerp(transform.position.y, 0, ySmooth * Time.deltaTime);
@@ -164,7 +184,7 @@ public class CameraFollow : MonoBehaviour
         if (CheckSize(maxSize))
         {
             // ... the target y coordinate should be a Lerp between the camera's current y position and the player's current y position.
-            cam.orthographicSize = Mathf.Lerp( currentSize,maxSize, ySmooth * Time.deltaTime);
+            cam.orthographicSize = Mathf.Lerp( currentSize,maxSize, xSmooth*4 * Time.deltaTime);
         }
         // The target x and y coordinates should not be larger than the maximum or smaller than the minimum.
         targetX = Mathf.Clamp(targetX, minXAndY.x, maxXAndY.x);
