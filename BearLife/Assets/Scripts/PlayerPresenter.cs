@@ -66,7 +66,8 @@ public class PlayerPresenter : MonoBehaviour
                     _view.EndAnimation();
                     if (!endedTurn)
                     {
-                        _pathEnd.ActivateCell();
+                        _pathEnd.ActivateCell(type);
+                        Debug.Log(_pathEnd.name);
                         endedTurn = true;                        
                     }
                     else
@@ -84,7 +85,9 @@ public class PlayerPresenter : MonoBehaviour
         _path =_pathHandler.GetPath(_model.GetPosition, _wayLength);
         _model.SetCurrentPosition( _model.GetPosition + _wayLength);
         _startPos = transform.position;
-        _endPos = _path.Dequeue().position;
+        _pathEnd = _path.Dequeue().gameObject.GetComponent<Cell>();
+        _endPos = _pathEnd.transform.position;
+
         _isMoving = true;
         _view.StartAnimation();
         _timer = 0;
@@ -115,6 +118,7 @@ public class PlayerPresenter : MonoBehaviour
     {
         if (!_isMoving)
         {
+            _view.StartAnimation();
             _wayLength = n;
             GetPath();
         }
@@ -124,6 +128,7 @@ public class PlayerPresenter : MonoBehaviour
     {
         if (!_isMoving)
         {
+            _view.StartAnimation();
             _wayLength = n;
             GetPathReverse();
         }

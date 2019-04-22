@@ -7,6 +7,7 @@ public class QuestionController : MonoBehaviour
 {
     [SerializeField] private Button[] _buttons;
     [SerializeField] private Text _questionText;
+    [SerializeField] private Text _timerText;
     [SerializeField] private GameObject _panel;
     [SerializeField] private QuestionDB _db;
     private Text[] _buttonText;
@@ -35,6 +36,7 @@ public class QuestionController : MonoBehaviour
 
     public void ShowQuestion(CellType type)
     {
+        StartCoroutine("QuestionTimer");
         _panel.SetActive(true);
         if (type == CellType.green)
         {
@@ -65,6 +67,7 @@ public class QuestionController : MonoBehaviour
     private void HidePanel()
     {
         _panel.SetActive(false);
+        StopCoroutine("QuestionTimer");
     }
 
     private void SetYesNoQuestion()
@@ -111,13 +114,25 @@ public class QuestionController : MonoBehaviour
             else
                 _buttons[a].onClick.AddListener(WrongAnswer);
         }
-        
        
         _buttonText[0].text = answers[0];
         _buttonText[1].text = answers[1];
         _buttonText[2].text = answers[2];
       
         _questionsChoice.RemoveAt(i);
+    }
+
+    private IEnumerator QuestionTimer()
+    {
+        int t = 10;
+        while (t > 0)
+        {
+            _timerText.text = t.ToString();
+            t--;
+            Debug.Log("RunningTimer");
+            yield return new WaitForSeconds(1);
+        }
+        WrongAnswer();
     }
 
 

@@ -33,7 +33,7 @@ public class PathHandler : MonoBehaviour
         {
             x = x - i;
             if (x <= -1)
-                x = path.Count - x;
+                x = path.Count + x;
             r.Enqueue(path[x]);
         }
 

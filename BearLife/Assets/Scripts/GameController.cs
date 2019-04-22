@@ -9,10 +9,12 @@ public class GameController : MonoBehaviour
     [SerializeField] protected PlayerPresenter playerBear;
     [SerializeField] protected PlayerPresenter playerMoose;
     protected PlayerPresenter currentPlayer;
+    protected bool turn;
     public static GameController instance;
     private void Start()
     {
         currentPlayer = playerBear;
+        turn = true;
         instance = this;
     }
 
@@ -31,6 +33,7 @@ public class GameController : MonoBehaviour
     // Start is called before the first frame update
     public virtual void ChangeActivePlayer()
     {
+        turn = true;
         if(currentPlayer.Type == PlayerType.bear)
         {
             currentPlayer = playerMoose;
@@ -49,7 +52,16 @@ public class GameController : MonoBehaviour
     }
     public int RollActivePlayer()
     {
-        return currentPlayer.Roll();
+        if (turn)
+        {
+            turn = false;
+            return currentPlayer.Roll();
+        }
+        else
+        {
+            return 0;
+        }
+
     }
 
     protected void ChangedPlayerType()

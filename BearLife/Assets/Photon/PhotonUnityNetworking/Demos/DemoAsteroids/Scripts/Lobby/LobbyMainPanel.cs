@@ -8,6 +8,9 @@ namespace Photon.Pun.Demo.Asteroids
 {
     public class LobbyMainPanel : MonoBehaviourPunCallbacks
     {
+        [Header("Main menu")]
+        public GameObject MainPanel;
+
         [Header("Login Panel")]
         public GameObject LoginPanel;
 
@@ -269,6 +272,11 @@ namespace Photon.Pun.Demo.Asteroids
             PhotonNetwork.LoadLevel("MultiplayerScene");
         }
 
+        public void ButtonClicked(string panelName)
+        {
+            SetActivePanel(panelName);
+        }
+
         #endregion
 
         private bool CheckPlayersReady()
@@ -320,6 +328,7 @@ namespace Photon.Pun.Demo.Asteroids
             JoinRandomRoomPanel.SetActive(activePanel.Equals(JoinRandomRoomPanel.name));
             RoomListPanel.SetActive(activePanel.Equals(RoomListPanel.name));    // UI should call OnRoomListButtonClicked() to activate this
             InsideRoomPanel.SetActive(activePanel.Equals(InsideRoomPanel.name));
+            MainPanel.SetActive(activePanel.Equals(MainPanel.name));
         }
 
         private void UpdateCachedRoomList(List<RoomInfo> roomList)

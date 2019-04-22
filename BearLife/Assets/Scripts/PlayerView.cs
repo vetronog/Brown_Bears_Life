@@ -9,12 +9,12 @@ public class PlayerView : IPlayerView
 
     public override void EndAnimation()
     {
-        _animator.SetTrigger("stop");
+        _animator.SetBool("walk", false);
     }
 
     public override void StartAnimation()
     {
-        _animator.SetTrigger("start");
+        _animator.SetBool("walk",true);
     }
 
     public void SetPresenter(PlayerPresenter newPresenter)
