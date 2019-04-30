@@ -3,7 +3,6 @@
 
 title Диаграмма компонентов
 
-Container(BackendApi, "Backend API", "C#", "Бизнес логика приложения в виде API")
 ContainerDb(Database, "База данных", "Scriptable object", "Хранилище вопросов игры")
 
 Container(VK, "Вконтакте", "VK API", "Публикация сертификата игрока на стене")
@@ -19,20 +18,22 @@ Container_Boundary(Game, "Игра") {
     Component(VKH, "VK Handler", "C#", "Управляет запросами к VK")
 }
 
+
+Rel(Unity, UI, "Запускает")
+Rel(Unity, Player, "Запускает")
+Rel(Unity, Path, "Запускает")
+Rel(Unity, Questions, "Запускает")
 Rel(Unity, GameController, "Запускает")
-Rel(Unity, Player, "Uses")
-Rel(Unity, Camera, "Uses")
-Rel(Unity, VK, "Публикует", "HTTPS")
+Rel(Unity, Camera, "Запускает")
 
-Rel(Player, GameController, "Uses")
-Rel(UI, GameController, "Uses")
+Rel(UI, VKH, "Отправляет запрос на публикацию")
+Rel(VKH, VK, "Публикует", "HTTPS")
 
+Rel(UI, GameController, "Выполняет события при взаимодействии с интерфейсом")
 
-Rel(UI, Player, "Uses")
-Rel(Player, Camera, "Uses")
-Rel(Questions, GameController, "Uses")
+Rel(GameController, Player, "Переключает активного игрока")
+Rel(Player, Path, "Запрашивает направление движения")
+Rel(Camera, Player, "Следит")
 
-Rel(BackendApi, Database, "Чтение из БД")
-Rel(Questions, BackendApi, "Получение списка вопросов для сессии")
-
+Rel(Questions, Database, "Получает вопросы")
 @enduml
