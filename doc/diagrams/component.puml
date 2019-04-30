@@ -1,0 +1,38 @@
+@startuml
+!includeurl https://raw.githubusercontent.com/RicardoNiepel/C4-PlantUML/master/C4_Component.puml
+
+title Диаграмма компонентов
+
+Container(BackendApi, "Backend API", "C#", "Бизнес логика приложения в виде API")
+ContainerDb(Database, "База данных", "Scriptable object", "Хранилище вопросов игры")
+
+Container(VK, "Вконтакте", "VK API", "Публикация сертификата игрока на стене")
+
+Container_Boundary(Game, "Игра") {
+    Component(Unity, "Unity Controller", "C#", "Связывает все компоненты в движке")
+    Component(GameController, "Game Controller", "C#", "Управляет основной логикой игры")
+    Component(Camera, "Camera Handler", "C#", "Управляет поведением камеры")
+    Component(Player, "Player Controller", "C#", "Управляет поведением персонажа")
+    Component(Questions, "Question Controller", "C#", "Управляет вопросами")
+    Component(UI, "UI Handler", "C#", "Управляет интерфейсом")
+    Component(Path, "Path Handler", "C#", "Задает путь передвидения персонажей")
+    Component(VKH, "VK Handler", "C#", "Управляет запросами к VK")
+}
+
+Rel(Unity, GameController, "Запускает")
+Rel(Unity, Player, "Uses")
+Rel(Unity, Camera, "Uses")
+Rel(Unity, VK, "Публикует", "HTTPS")
+
+Rel(Player, GameController, "Uses")
+Rel(UI, GameController, "Uses")
+
+
+Rel(UI, Player, "Uses")
+Rel(Player, Camera, "Uses")
+Rel(Questions, GameController, "Uses")
+
+Rel(BackendApi, Database, "Чтение из БД")
+Rel(Questions, BackendApi, "Получение списка вопросов для сессии")
+
+@enduml
