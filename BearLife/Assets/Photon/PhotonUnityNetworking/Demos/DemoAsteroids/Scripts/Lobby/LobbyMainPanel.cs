@@ -203,6 +203,12 @@ namespace Photon.Pun.Demo.Asteroids
             UnityEngine.SceneManagement.SceneManager.LoadScene("SampleScene");
         }
 
+        public void Quit()
+        {
+            Application.Quit();
+        }
+
+
         public void OnBackButtonClicked()
         {
             if (PhotonNetwork.InLobby)

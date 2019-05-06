@@ -44,6 +44,7 @@ public class MultiplayerGameController : GameController,IPunObservable
     [PunRPC]
     private void TransferOwnership()
     {
+        turn = true;
         if (_activePlayer == PhotonNetwork.PlayerList[0])
             _activePlayer = PhotonNetwork.PlayerList[1];
         else
@@ -73,7 +74,7 @@ public class MultiplayerGameController : GameController,IPunObservable
 
     public override void EndGame(PlayerType type)
     {
-        _photonView.RPC("SetEnd", RpcTarget.All);
+        _photonView.RPC("SetEnd", RpcTarget.All, type);
     }
 
     public override void Exit()
