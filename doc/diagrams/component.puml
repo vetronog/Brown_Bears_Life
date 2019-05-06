@@ -1,0 +1,39 @@
+@startuml
+!includeurl https://raw.githubusercontent.com/RicardoNiepel/C4-PlantUML/master/C4_Component.puml
+
+title Диаграмма компонентов
+
+ContainerDb(Database, "База данных", "Scriptable object", "Хранилище вопросов игры")
+
+Container(VK, "Вконтакте", "VK API", "Публикация сертификата игрока на стене")
+
+Container_Boundary(Game, "Игра") {
+    Component(Unity, "Unity Controller", "C#", "Связывает все компоненты в движке")
+    Component(GameController, "Game Controller", "C#", "Управляет основной логикой игры")
+    Component(Camera, "Camera Handler", "C#", "Управляет поведением камеры")
+    Component(Player, "Player Controller", "C#", "Управляет поведением персонажа")
+    Component(Questions, "Question Controller", "C#", "Управляет вопросами")
+    Component(UI, "UI Handler", "C#", "Управляет интерфейсом")
+    Component(Path, "Path Handler", "C#", "Задает путь передвидения персонажей")
+    Component(VKH, "VK Handler", "C#", "Управляет запросами к VK")
+}
+
+
+Rel(Unity, UI, "Запускает")
+Rel(Unity, Player, "Запускает")
+Rel(Unity, Path, "Запускает")
+Rel(Unity, Questions, "Запускает")
+Rel(Unity, GameController, "Запускает")
+Rel(Unity, Camera, "Запускает")
+
+Rel(UI, VKH, "Отправляет запрос на публикацию")
+Rel(VKH, VK, "Публикует", "HTTPS")
+
+Rel(UI, GameController, "Выполняет события при взаимодействии с интерфейсом")
+
+Rel(GameController, Player, "Переключает активного игрока")
+Rel(Player, Path, "Запрашивает направление движения")
+Rel(Camera, Player, "Следит")
+
+Rel(Questions, Database, "Получает вопросы")
+@enduml
