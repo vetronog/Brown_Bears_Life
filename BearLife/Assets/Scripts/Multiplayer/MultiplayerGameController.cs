@@ -1,91 +1,94 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using BearLife.Game;
+using BearLife.PlayerSettings;
 using UnityEngine;
 using Photon.Pun;
 using Photon.Realtime;
-public class MultiplayerGameController : GameController,IPunObservable
+
+namespace BearLife.Multiplayer
 {
-    private Player _activePlayer;
-    private PhotonView _photonView;
-    // Start is called before the first frame update
-    void Awake()
+    public class MultiplayerGameController : GameController, IPunObservable
     {
-        _activePlayer = PhotonNetwork.PlayerList[0];
-        currentPlayer = playerBear;
-        _photonView = GetComponent<PhotonView>();
-        if (PhotonNetwork.MasterClient == PhotonNetwork.LocalPlayer)
+        private Photon.Realtime.Player _activePlayer;
+        private PhotonView _photonView;
+        // Start is called before the first frame update
+        void Awake()
         {
-            Invoke("ChangeActivePlayer", 0.1f);
-        }
-    }
-
-    public override void ChangeActivePlayer()
-    {
-        _photonView.RPC("TransferOwnership", RpcTarget.All);
-
-    }
-
-    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
-    {
-        if (stream.IsWriting)
-        {
-            stream.SendNext(_activePlayer);
-        }
-        else
-        {
-            Player player = stream.ReceiveNext() as Photon.Realtime.Player;
-            Debug.Log(player.UserId);
-            if (_activePlayer != player)
+            _activePlayer = PhotonNetwork.PlayerList[0];
+            currentPlayer = playerBear;
+            _photonView = GetComponent<PhotonView>();
+            if (PhotonNetwork.MasterClient == PhotonNetwork.LocalPlayer)
             {
-                //ChangeActivePlayer();
+                Invoke("ChangeActivePlayer", 0.1f);
             }
         }
-    }
-    [PunRPC]
-    private void TransferOwnership()
-    {
-        turn = true;
-        if (_activePlayer == PhotonNetwork.PlayerList[0])
-            _activePlayer = PhotonNetwork.PlayerList[1];
-        else
-            _activePlayer = PhotonNetwork.PlayerList[0];
-
-        if (currentPlayer.Type == PlayerType.bear)
+    
+        public override void ChangeActivePlayer()
         {
-            currentPlayer = playerMoose;
+            _photonView.RPC("TransferOwnership", RpcTarget.All);
+    
         }
-        else
+    
+        public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
         {
-            currentPlayer = playerBear;
+            if (stream.IsWriting)
+            {
+                stream.SendNext(_activePlayer);
+            }
+            else
+            {
+                Player player = stream.ReceiveNext() as Photon.Realtime.Player;
+                Debug.Log(player.UserId);
+                if (_activePlayer != player)
+                {
+                    //ChangeActivePlayer();
+                }
+            }
         }
-        ChangedPlayer();
-        ChangedPlayerType();
-        if (currentPlayer.IsSkipping)
+        [PunRPC]
+        private void TransferOwnership()
         {
-            currentPlayer.SkipTurn(false);
-            ChangeActivePlayer();
+            turn = true;
+            if (_activePlayer == PhotonNetwork.PlayerList[0])
+                _activePlayer = PhotonNetwork.PlayerList[1];
+            else
+                _activePlayer = PhotonNetwork.PlayerList[0];
+    
+            if (currentPlayer.Type == PlayerType.bear)
+            {
+                currentPlayer = playerMoose;
+            }
+            else
+            {
+                currentPlayer = playerBear;
+            }
+            ChangedPlayer();
+            ChangedPlayerType();
+            if (currentPlayer.IsSkipping)
+            {
+                currentPlayer.SkipTurn(false);
+                ChangeActivePlayer();
+            }
+        }
+    
+        public Player GetPlayer()
+        {
+            return _activePlayer;
+        }
+    
+        public override void EndGame(PlayerType type)
+        {
+            _photonView.RPC("SetEnd", RpcTarget.All, type);
+        }
+    
+        public override void Exit()
+        {
+            PhotonNetwork.Disconnect();
+        }
+    
+        [PunRPC]
+        private void SetEnd(PlayerType type)
+        {
+            SetEndGame(type);
         }
     }
-
-    public Player GetPlayer()
-    {
-        return _activePlayer;
-    }
-
-    public override void EndGame(PlayerType type)
-    {
-        _photonView.RPC("SetEnd", RpcTarget.All, type);
-    }
-
-    public override void Exit()
-    {
-        PhotonNetwork.Disconnect();
-    }
-
-    [PunRPC]
-    private void SetEnd(PlayerType type)
-    {
-        SetEndGame(type);
-    }
-
 }

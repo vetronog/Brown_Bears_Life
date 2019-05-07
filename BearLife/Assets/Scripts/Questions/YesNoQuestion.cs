@@ -1,17 +1,18 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
-[CreateAssetMenu(fileName = "YesNoQuestion_", menuName = "Scriptable object/Yes No question")]
-public class YesNoQuestion : QuestionData
+namespace BearLife.Question
 {
-    [SerializeField] private bool _isTrue;
-    public bool IsTrue
+    [CreateAssetMenu(fileName = "YesNoQuestion_", menuName = "Scriptable object/Yes No question")]
+    public class YesNoQuestion : QuestionData
     {
-        get
+        [SerializeField] private bool _isTrue;
+        public bool IsTrue
         {
-            return _isTrue;
+            get
+            {
+                return _isTrue;
+            }
         }
     }
-    
 }
+

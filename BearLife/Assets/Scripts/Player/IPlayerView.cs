@@ -1,9 +1,10 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
-public abstract class IPlayerView: MonoBehaviour
+namespace BearLife.PlayerSettings
 {
-    public abstract void StartAnimation();
-    public abstract void EndAnimation();
+    public abstract class IPlayerView: MonoBehaviour
+    {
+        public abstract void StartAnimation();
+        public abstract void EndAnimation();
+    }
 }

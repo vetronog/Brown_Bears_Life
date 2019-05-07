@@ -1,42 +1,41 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
-public enum PlayerType
+﻿namespace BearLife.PlayerSettings
 {
-    bear,
-    moose,
-    none
-}
-
-public class PlayerModel
-{
-    private PlayerType _type;
-    private int _position;
-
-    public void SetType(PlayerType newPlayerType)
+    public enum PlayerType
     {
-        _type = newPlayerType;
+        bear,
+        moose,
+        none
     }
 
-    public PlayerType GetPlayerType
+    public class PlayerModel
     {
-        get
+        private PlayerType _type;
+        private int _position;
+
+        public void SetType(PlayerType newPlayerType)
         {
-            return _type;
+            _type = newPlayerType;
         }
-    }
 
-    public void SetCurrentPosition(int newPos)
-    {
-        _position = newPos;
-    }
-
-    public int GetPosition
-    {
-        get
+        public PlayerType GetPlayerType
         {
-            return _position;
+            get
+            {
+                return _type;
+            }
+        }
+
+        public void SetCurrentPosition(int newPos)
+        {
+            _position = newPos;
+        }
+
+        public int GetPosition
+        {
+            get
+            {
+                return _position;
+            }
         }
     }
 }

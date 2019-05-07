@@ -1,16 +1,17 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
-public class QuestionData : ScriptableObject
+namespace BearLife.Question
 {
-    [SerializeField] private string _questionTitle;
-
-    public string GetQuestionTitle
+    public class QuestionData : ScriptableObject
     {
-        get
+        [SerializeField] private string _questionTitle;
+
+        public string GetQuestionTitle
         {
-            return _questionTitle;
+            get
+            {
+                return _questionTitle;
+            }
         }
     }
 }

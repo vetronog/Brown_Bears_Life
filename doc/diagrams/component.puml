@@ -1,39 +1,40 @@
 @startuml
-!includeurl https://raw.githubusercontent.com/RicardoNiepel/C4-PlantUML/master/C4_Component.puml
+!includeurl https://raw.githubusercontent.com/RicardoNiepel/C4-PlantUML/master/C4_Container.puml
+
+LAYOUT_TOP_DOWN
 
 title Диаграмма компонентов
-
-ContainerDb(Database, "База данных", "Scriptable object", "Хранилище вопросов игры")
 
 Container(VK, "Вконтакте", "VK API", "Публикация сертификата игрока на стене")
 
 Container_Boundary(Game, "Игра") {
-    Component(Unity, "Unity Controller", "C#", "Связывает все компоненты в движке")
-    Component(GameController, "Game Controller", "C#", "Управляет основной логикой игры")
-    Component(Camera, "Camera Handler", "C#", "Управляет поведением камеры")
-    Component(Player, "Player Controller", "C#", "Управляет поведением персонажа")
-    Component(Questions, "Question Controller", "C#", "Управляет вопросами")
+    Component(Game, "Game", "C#", "Управляет основной логикой игры")
+    Component(CameraSettings, "Camera Settings", "C#", "Управляет поведением камеры")
+    Component(PlayerSettings, "Player Settings", "C#", "Управляет поведением персонажа")
+    Component(Questions, "Question", "C#", "Управляет вопросами")
     Component(UI, "UI Handler", "C#", "Управляет интерфейсом")
-    Component(Path, "Path Handler", "C#", "Задает путь передвидения персонажей")
-    Component(VKH, "VK Handler", "C#", "Управляет запросами к VK")
+    Component(Field, "Field", "C#", "Задает путь передвидения персонажей")
+    Component(Multiplayer, "Multiplayer", "C#", "Управляет запросами к VK")
 }
 
+Rel(CameraSettings, Game, "Следит за активным игроком")
 
-Rel(Unity, UI, "Запускает")
-Rel(Unity, Player, "Запускает")
-Rel(Unity, Path, "Запускает")
-Rel(Unity, Questions, "Запускает")
-Rel(Unity, GameController, "Запускает")
-Rel(Unity, Camera, "Запускает")
+Rel(UI, PlayerSettings, "Выполняет события при взаимодействии с интерфейсом")
+Rel(UI, Game, "Выполняет события при взаимодействии с интерфейсом")
 
-Rel(UI, VKH, "Отправляет запрос на публикацию")
-Rel(VKH, VK, "Публикует", "HTTPS")
+Rel(Multiplayer, PlayerSettings, "Взаимодействие игроков по сети")
+Rel(Multiplayer, Game, "Взаимодействие игроков по сети")
 
-Rel(UI, GameController, "Выполняет события при взаимодействии с интерфейсом")
+Rel(Game, PlayerSettings, "Переключает активного игрока")
 
-Rel(GameController, Player, "Переключает активного игрока")
-Rel(Player, Path, "Запрашивает направление движения")
-Rel(Camera, Player, "Следит")
+Rel(PlayerSettings, Game, "Переключает активного игрока")
+Rel(PlayerSettings, Field, "Получает направление движения")
 
-Rel(Questions, Database, "Получает вопросы")
+Rel(Questions, Field, "Определяет тип вопроса")
+Rel(Questions, Game, "Отправляет данные вопросов")
+
+Rel(Field, Game, "Переключает активного игрока")
+Rel(Field, Questions, "Запрашивает вопрос")
+Rel(Field, PlayerSettings, "Запрашивает активного игрока")
+
 @enduml

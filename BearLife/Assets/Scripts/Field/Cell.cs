@@ -1,76 +1,81 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using BearLife.Game;
+using BearLife.PlayerSettings;
+using BearLife.Question;
 using UnityEngine;
 
-public enum CellType
+namespace BearLife.Field
 {
-    green,
-    yellow,
-    skip,
-    finish
-}
-
-public class Cell : MonoBehaviour
-{
-    [SerializeField] private CellType _type;
-    // Start is called before the first frame update
-    void Start()
+    public enum CellType
     {
-        
+        green,
+        yellow,
+        skip,
+        finish
     }
-
-    // Update is called once per frame
-    void Update()
+    
+    public class Cell : MonoBehaviour
     {
-        
-    }
-    public void ActivateCell(PlayerType type)
-    {
-        if (_type == CellType.finish)
+        [SerializeField] private CellType _type;
+        // Start is called before the first frame update
+        void Start()
         {
-            if (type == PlayerType.bear)
+            
+        }
+    
+        // Update is called once per frame
+        void Update()
+        {
+            
+        }
+        public void ActivateCell(PlayerType type)
+        {
+            if (_type == CellType.finish)
             {
-                Collider2D[] col = Physics2D.OverlapCircleAll(transform.position, 1);
-                foreach (Collider2D c in col)
+                if (type == PlayerType.bear)
                 {
-                    if (c.gameObject.tag == "Player")
+                    Collider2D[] col = Physics2D.OverlapCircleAll(transform.position, 1);
+                    foreach (Collider2D c in col)
                     {
-                        if (c.gameObject.GetComponent<PlayerPresenter>().Type == PlayerType.moose)
+                        if (c.gameObject.tag == "Player")
                         {
-                            GameController.instance.EndGame(type);
-                            break;
+                            if (c.gameObject.GetComponent<PlayerPresenter>().Type == PlayerType.moose)
+                            {
+                                GameController.instance.EndGame(type);
+                                break;
+                            }
                         }
                     }
+                    GameController.instance.ChangeActivePlayer();
                 }
-                GameController.instance.ChangeActivePlayer();
+                else
+                {
+                    GameController.instance.EndGame(type);
+                }
             }
             else
             {
-                GameController.instance.EndGame(type);
+                ActivateCell();
             }
         }
-        else
+    
+        public void ActivateCell()
         {
-            ActivateCell();
-        }
-    }
-
-    public void ActivateCell()
-    {
-        switch(_type)
-        {
-            case CellType.green:
-                QuestionController.instance.ShowQuestion(_type);
-                break;
-            case CellType.yellow:
-                QuestionController.instance.ShowQuestion(_type);
-                break;
-            case CellType.skip:
-                GameController.instance.SkipTurn();
-                GameController.instance.ChangeActivePlayer();
-                break;
-            default:
-                break;
+            switch(_type)
+            {
+                case CellType.green:
+                    QuestionController.instance.ShowQuestion(_type);
+                    break;
+                case CellType.yellow:
+                    QuestionController.instance.ShowQuestion(_type);
+                    break;
+                case CellType.skip:
+                    GameController.instance.SkipTurn();
+                    GameController.instance.ChangeActivePlayer();
+                    break;
+                default:
+                    break;
+            }
         }
     }
 }
+

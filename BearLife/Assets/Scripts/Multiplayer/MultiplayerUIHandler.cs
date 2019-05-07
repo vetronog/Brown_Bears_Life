@@ -1,75 +1,78 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using BearLife.PlayerSettings;
 using UnityEngine;
 using UnityEngine.UI;
 using Photon.Pun;
+using Photon.Realtime;
 
-public class MultiplayerUIHandler : MonoBehaviour, IPunObservable
+namespace BearLife.Multiplayer
 {
-    [SerializeField]
-    private MultiplayerGameController _gc;
-    [SerializeField]
-    private Text _rollText;
-    [SerializeField]
-    private Text _playerText;
-    [SerializeField]
-    private Button _rollButton;
-    [SerializeField]
-    private GameObject _endPanel;
-    [SerializeField]
-    private Photon.Realtime.Player _player;
-    private PhotonView _photonView;
+    public class MultiplayerUIHandler : MonoBehaviour, IPunObservable
+    {
+        [SerializeField]
+        private MultiplayerGameController _gc;
+        [SerializeField]
+        private Text _rollText;
+        [SerializeField]
+        private Text _playerText;
+        [SerializeField]
+        private Button _rollButton;
+        [SerializeField]
+        private GameObject _endPanel;
+        [SerializeField]
+        private Player _player;
+        private PhotonView _photonView;
 
-    private void Start()
-    {
-        _gc.changedPlayerType += ChangePlayerText;
-        _gc.endGame += EndGame;
-        _photonView = GetComponent<PhotonView>();
-    }
-    public void RollButton()
-    {
-        _rollText.text = _gc.RollActivePlayer().ToString();
-    }
-
-    private void ChangePlayerText(PlayerType type)
-    {
-        _photonView.RPC("UpdateState", RpcTarget.All);
-    }
-    [PunRPC]
-    private void UpdateState()
-    {
-        _player = _gc.GetPlayer();
-        if (_player == PhotonNetwork.LocalPlayer)
+        private void Start()
         {
-            _playerText.text = "Твой Ход";
-            _rollButton.interactable = true;
+            _gc.changedPlayerType += ChangePlayerText;
+            _gc.endGame += EndGame;
+            _photonView = GetComponent<PhotonView>();
         }
-        else
+        public void RollButton()
         {
-            _playerText.text = "Ход Другого Игрока";
-            _rollButton.interactable = false;
+            _rollText.text = _gc.RollActivePlayer().ToString();
         }
-    }
 
-    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
-    {
-        if (stream.IsWriting)
+        private void ChangePlayerText(PlayerType type)
         {
-            stream.SendNext(_player);
+            _photonView.RPC("UpdateState", RpcTarget.All);
         }
-        else
+        [PunRPC]
+        private void UpdateState()
         {
-            _player = stream.ReceiveNext() as Photon.Realtime.Player;
+            _player = _gc.GetPlayer();
+            if (_player == PhotonNetwork.LocalPlayer)
+            {
+                _playerText.text = "Твой Ход";
+                _rollButton.interactable = true;
+            }
+            else
+            {
+                _playerText.text = "Ход Другого Игрока";
+                _rollButton.interactable = false;
+            }
         }
-    }
 
-    private void EndGame(PlayerType type)
-    {
-        _endPanel.SetActive(true);
-    }
+        public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
+        {
+            if (stream.IsWriting)
+            {
+                stream.SendNext(_player);
+            }
+            else
+            {
+                _player = stream.ReceiveNext() as Photon.Realtime.Player;
+            }
+        }
 
-    public void Exit()
-    {
-        _gc.Exit();
+        private void EndGame(PlayerType type)
+        {
+            _endPanel.SetActive(true);
+        }
+
+        public void Exit()
+        {
+            _gc.Exit();
+        }
     }
 }

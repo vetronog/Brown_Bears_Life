@@ -1,21 +1,22 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
-[CreateAssetMenu(fileName = "ChoiceQuestion_", menuName = "Scriptable object/Choice question")]
-
-public class ChoiceQuestion : QuestionData
+namespace BearLife.Question
 {
-    [SerializeField] private string[] _answers = new string[3];
-    [SerializeField] private int _rightAnswerIndex;
+    [CreateAssetMenu(fileName = "ChoiceQuestion_", menuName = "Scriptable object/Choice question")]
 
-    public string[] GetAnswers()
+    public class ChoiceQuestion : QuestionData
     {
-        return _answers;
-    }
+        [SerializeField] private string[] _answers = new string[3];
+        [SerializeField] private int _rightAnswerIndex;
 
-    public int GetRightAnswer()
-    {
-        return _rightAnswerIndex;
+        public string[] GetAnswers()
+        {
+            return _answers;
+        }
+
+        public int GetRightAnswer()
+        {
+            return _rightAnswerIndex;
+        }
     }
 }
