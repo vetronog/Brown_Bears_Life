@@ -1,13 +1,13 @@
 @startuml
-!includeurl https://raw.githubusercontent.com/RicardoNiepel/C4-PlantUML/master/C4_Container.puml
+!includeurl https://raw.githubusercontent.com/RicardoNiepel/C4-PlantUML/master/C4_Component.puml
 
 LAYOUT_TOP_DOWN
 
 title Диаграмма компонентов
 
-Container(VK, "Вконтакте", "VK API", "Публикация сертификата игрока на стене")
+'Container(VK, "Вконтакте", "VK API", "Публикация сертификата игрока на стене")
 
-Container_Boundary(Game, "Игра") {
+Container_Boundary(Gamecontainer, "Игра") {
     Component(Game, "Game", "C#", "Управляет основной логикой игры")
     Component(CameraSettings, "Camera Settings", "C#", "Управляет поведением камеры")
     Component(PlayerSettings, "Player Settings", "C#", "Управляет поведением персонажа")
