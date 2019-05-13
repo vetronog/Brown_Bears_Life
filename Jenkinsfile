@@ -2,15 +2,17 @@ pipeline {
     agent any
 
 	environment {
-        GIT_URL = 'https://github.com/vetronog/Brown_Bears_Life.git'
+        GIT_URL = 'ssh://git@github.com:vetronog/Brown_Bears_Life.git'
     }
 	
     stages {
 		stage('Git Clone'){
             steps {
-                deleteDir()
-                slackSend channel: '#chaneel-name', message: "${env.JOB_NAME} is started"
-                git branch: 'master', credentialsId: 'Jenkins Master SSH', url: "${GIT_URL}"
+                git branch: 'master',
+					credentialsId: 'ee3f3e84-0371-4fd5-82ad-30f3f0709c98',
+					url: GIT_URL
+
+				sh "ls -lat"
             }
         }
         stage('Build') {
