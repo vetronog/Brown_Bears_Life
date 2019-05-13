@@ -2,7 +2,7 @@ pipeline {
     agent any
 
 	environment {
-        GIT_URL = 'ssh://git@github.com:vetronog/Brown_Bears_Life.git'
+        GIT_URL = 'https://github.com/vetronog/Brown_Bears_Life.git'
     }
 	
     stages {
