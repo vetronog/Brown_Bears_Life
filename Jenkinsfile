@@ -21,7 +21,7 @@ pipeline {
         }
         stage('Build') {
             steps {
-                sh '"C:\Program Files\Unity\Editor\Unity.exe" -projectPath BearLife -executeMethod BuildHandler.Start'
+                sh '"C:/Program Files/Unity/Editor/Unity.exe" -projectPath BearLife -executeMethod BuildHandler.Start'
             }
         }
         stage('Test') {
