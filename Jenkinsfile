@@ -6,6 +6,8 @@ pipeline {
 
 	environment {
         GIT_URL = 'https://github.com/vetronog/Brown_Bears_Life.git'
+		UNITY_APP = 'C:\Program Files\Unity\Editor'
+		UNITY_PROJECT_PATH = 'BearLife'
     }
 	
     stages {
@@ -19,7 +21,7 @@ pipeline {
         }
         stage('Build') {
             steps {
-                echo 'Building..'
+                sh 'UNITY_APP -projectPath UNITY_PROJECT_PATH -executeMethod BuildHandler.Start'
             }
         }
         stage('Test') {
@@ -33,4 +35,9 @@ pipeline {
             }
         }
     }
+	post {
+    always {
+      deleteDir()
+    }
+  }
 }
