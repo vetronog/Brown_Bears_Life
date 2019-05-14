@@ -21,7 +21,7 @@ pipeline {
         }
         stage('Build') {
             steps {
-                sh 'UNITY_APP -projectPath UNITY_PROJECT_PATH -executeMethod BuildHandler.Start'
+                sh 'env.UNITY_APP -projectPath env.UNITY_PROJECT_PATH -executeMethod BuildHandler.Start'
             }
         }
         stage('Test') {
