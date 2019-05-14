@@ -21,7 +21,7 @@ pipeline {
         }
         stage('Build') {
             steps {
-                sh 'cd ../Applications/Unity/Unity.app/Contents/MacOS/Unity -batchmode -nographics -projectPath "$(pwd)" -logFile unitylog.log -executeMethod BuildHandler.Start -quit'
+                sh 'cd "C:/Program Files/Unity/Editor" -batchmode -nographics -projectPath "$(pwd)" -logFile unitylog.log -executeMethod BuildHandler.Start -quit'
             }
         }
         stage('Test') {
