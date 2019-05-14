@@ -7,7 +7,7 @@ pipeline {
 	environment {
         GIT_URL = 'https://github.com/vetronog/Brown_Bears_Life.git'
 		UNITY_APP = 'C:\\Program Files\\Unity\\Editor'
-		UNITY_PROJECT_PATH = 'BearLife'
+		UNITY_PROJECT_PATH = '.\BearLife'
     }
 	
     stages {
@@ -21,7 +21,7 @@ pipeline {
         }
         stage('Build') {
             steps {
-                sh '"C:/Program Files/Unity/Editor/Unity.exe" -projectPath BearLife -executeMethod BuildHandler.Start'
+                sh 'cd ../Applications/Unity/Unity.app/Contents/MacOS/Unity -batchmode -nographics -projectPath "$(pwd)" -logFile unitylog.log -executeMethod BuildHandler.Start -quit'
             }
         }
         stage('Test') {
