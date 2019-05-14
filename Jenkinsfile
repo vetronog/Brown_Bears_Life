@@ -6,7 +6,7 @@ pipeline {
 
 	environment {
         GIT_URL = 'https://github.com/vetronog/Brown_Bears_Life.git'
-		UNITY_APP = 'C:\Program Files\Unity\Editor'
+		UNITY_APP = 'C:\\Program Files\\Unity\\Editor'
 		UNITY_PROJECT_PATH = 'BearLife'
     }
 	
