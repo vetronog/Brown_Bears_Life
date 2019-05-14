@@ -21,7 +21,11 @@ pipeline {
         }
         stage('Build') {
             steps {
-                sh 'cd "C:/Program Files/Unity/Editor" -batchmode -nographics -projectPath "$(pwd)" -logFile unitylog.log -executeMethod BuildHandler.Start -quit'
+                sh '''
+                    rm -rf Builds/android/*
+                    cd Assets && nuget restore && cd ..
+                    /Applications/Unity/Unity.app/Contents/MacOS/Unity -batchmode -nographics -projectPath "$(pwd)" -logFile unitylog.log -executeMethod BuildHandler.Start -quit
+                '''
             }
         }
         stage('Test') {
